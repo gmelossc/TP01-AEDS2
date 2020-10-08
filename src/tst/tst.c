@@ -1,10 +1,4 @@
-#include "includes/tst.h"
-
-typedef struct node{
-	char c;
-	struct node *left, *mid, right;
-	bool end;
-} Node;
+#include "tst.h"
 
 static void allocNode(Node **node){
 	*node = (Node*) malloc(sizeof(Node));
@@ -43,7 +37,7 @@ void addTST(TST *tst, char s[], int len){
 			at = at->mid;
 			++i;
 		}
-		else if(at->value > s[i]) at = at->left;//se o caractere a ser inserido for maior do que a raíz, então sigo pela direita
+		else if(at->c > s[i]) at = at->left;//se o caractere a ser inserido for maior do que a raíz, então sigo pela direita
 		else at = at->right;//se o caractere a ser inserido for maior do que a raíz, então sigo pela esquerda
 	}
 }

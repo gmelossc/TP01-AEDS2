@@ -5,6 +5,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+typedef struct node{
+	char c;
+	struct node *left, *mid, *right;
+	bool end;
+} Node;
+
 typedef Node* TST;
 
 void initTST(TST *tst); //incializa a trie TST
