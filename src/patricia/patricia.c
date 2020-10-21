@@ -62,8 +62,6 @@ int height(PAT pat){
 void patriciaPrint(PAT pat){
     if(pat == NULL) return;
     patriciaPrintWords(pat->left);
-    if(isExt(pat)) {
-        printf("%s\n", pat->word->str);
-    }
+    if(isExt(pat)) printf("%s\n", pat->word->str);
     patriciaPrintWords(pat->right);
 }
