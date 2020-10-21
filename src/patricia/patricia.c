@@ -18,11 +18,10 @@ void initPat(PAT *pat){
 	*pat = NULL;
 }
 
-static void
-
 void addPat(PAT *pat, Word word){
 	PAT *at, external, internal;
 	int diff = 0;
+
 	if(!*pat) initNode(pat, &word, EXT, NULL, NULL, '\0');
 	else{
 		at = pat;
