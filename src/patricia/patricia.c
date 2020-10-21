@@ -6,14 +6,14 @@ static bool isExt(PAT pat){
 
 static void initNode(Node **node, Word *word, int pos, Node *left, Node *right, char c){
 	*node = (Node*) malloc(sizeof(Node));
-	
+
 	if(pos == EXT) initWord(&(*node)->word, word->str);
 	else ((*node)->word) = NULL;
 
 	(*node)->c = (pos == EXT ? '\0' : c);
-    (*node)->pos = pos;
-    (*node)->left = left;
-    (*node)->right = right;
+	(*node)->pos = pos;
+	(*node)->left = left;
+	(*node)->right = right;
 }
 
 void initPat(PAT *pat){
