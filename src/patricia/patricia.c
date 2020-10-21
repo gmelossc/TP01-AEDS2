@@ -60,7 +60,7 @@ int height(PAT pat){
 	return (pat == NULL ? -1 : 1 + max(height(pat->left), height(pat->right)));
 }
 
-void patriciaPrintWords(PAT pat){
+void patriciaPrint(PAT pat){
     if(pat == NULL) return;
     patriciaPrintWords(pat->left);
     if(isExt(pat)) {
