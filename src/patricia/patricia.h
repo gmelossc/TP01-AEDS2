@@ -20,7 +20,7 @@ typedef Node * PAT;
 
 void initPat(PAT *pat);
 void addPat(PAT *pat, Word word);
-void patriciaPrintWords(PAT pat);
+void patriciaPrint(PAT pat);
 int height(PAT pat);
 
 #endif
