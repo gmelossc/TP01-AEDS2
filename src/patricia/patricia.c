@@ -60,9 +60,9 @@ int height(PAT pat){
 	return (pat == NULL ? -1 : 1 + max(height(pat->left), height(pat->right)));
 }
 
-void patriciaPrint(PAT pat){
+void patPrint(PAT pat){
     if(pat == NULL) return;
-    patriciaPrintWords(pat->left);
+    patPrint(pat->left);
     if(isExt(pat)) printf("%s\n", pat->word->str);
-    patriciaPrintWords(pat->right);
+    patPrint(pat->right);
 }
