@@ -18,6 +18,8 @@ void initPat(PAT *pat){
 	*pat = NULL;
 }
 
+static void
+
 void addPat(PAT *pat, Word word){
 	PAT *at, external, internal;
 	int diff = 0;
@@ -35,24 +37,21 @@ void addPat(PAT *pat, Word word){
 
 		initNode(&external, &word, -1, NULL, NULL, '\0');
 
-	    if(word.str[diff] <= (*at)->word->str[diff])
+		if(word.str[diff] <= (*at)->word->str[diff])
 			initNode(&internal, NULL, diff, external, NULL, word.str[diff]);
 		else
 			initNode(&internal, NULL, diff, NULL, external, (*at)->word->str[diff]);
 
+		at = pat;
 
-	    at = pat;
-
-	    while((*at)->pos <= diff && !isExt(*at)){
-	        if(word.str[(*at)->pos] <= (*at)->c) at = &(*at)->left;
-	        else at = &(*at)->right;
-	    }
-
-	    if(internal->left) internal->right = *at;
+		while((*at)->pos <= diff && !isExt(*at)){
+			if(word.str[(*at)->pos] <= (*at)->c) at = &(*at)->left;
+			else at = &(*at)->right;
+		}
+		if(internal->left) internal->right = *at;
 		else internal->left = *at;
 
-	    *at = internal;
-		return;
+		*at = internal;
 	}
 }
 
