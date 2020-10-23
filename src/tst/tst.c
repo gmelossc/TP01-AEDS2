@@ -1,10 +1,10 @@
 #include "tst.h"
 
-static void allocNode(Node **node){
-	*node = (Node*) malloc(sizeof(Node));
+static void allocNode(tNode **node){
+	*node = (tNode*) malloc(sizeof(tNode));
 }
 
-static void initNode(Node **node, char c){ //inicializa um node
+static void initNode(tNode **node, char c){ //inicializa um node
 	allocNode(node);
 	(*node)-> end = false;
 	(*node)->left = NULL;
@@ -13,7 +13,7 @@ static void initNode(Node **node, char c){ //inicializa um node
 	(*node)->c = c;
 }
 
-static void freeNode(Node *node){ //desaloca um Node
+static void freeNode(tNode *node){ //desaloca um tNode
 	free(node);
 }
 
@@ -21,10 +21,9 @@ void initTST(TST *tst){
 	*tst = NULL;
 }
 
-
 void addTST(TST *tst, char s[], int len){
 	int i = 0; // defino um auxiliar para iterar nas posições do caractere da string a ser inserido
-	Node *at;
+	tNode *at;
 	at = *tst; //defino um auxiliar para interar na tst
 
 	while(i < len){
@@ -40,6 +39,38 @@ void addTST(TST *tst, char s[], int len){
 		else if(at->c > s[i]) at = at->left;//se o caractere a ser inserido for maior do que a raíz, então sigo pela direita
 		else at = at->right;//se o caractere a ser inserido for maior do que a raíz, então sigo pela esquerda
 	}
+}
+
+bool tstFind(TST tst, char s[]){
+    tNode *at;
+	at = tst;
+	int len = strlen(s);
+	int i = 0;
+
+    while(i < len){
+		if(!at) return 0;
+		if(s[i] < at->c) at = at->left;
+		else if(s[i] == at->c){
+			printf("%c", at->c);
+			at = at->mid;
+			++i;
+		}
+		else at = at->right;
+    }
+	printf("\n");
+    return at->end;
+}
+
+void printTST(TST trie, char s[], int pos) {
+    if(trie == NULL) return;
+    printTST(trie->left, s, pos);
+    s[pos] = trie->c;
+    if(trie->end){
+        s[pos+1] = '\0';
+        printf("%s\n", s);
+    }
+    printTST(trie->mid, s, pos+1);
+    printTST(trie->right, s, pos);
 }
 
 void freeTST(TST *tst){

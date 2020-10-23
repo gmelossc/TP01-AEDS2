@@ -4,8 +4,8 @@ static bool isExt(PAT pat){
 	return pat->pos == EXT ? 1 : 0;
 }
 
-static void initNode(Node **node, Word *word, int pos, Node *left, Node *right, char c){
-	*node = (Node*) malloc(sizeof(Node));
+static void initNode(pNode **node, Word *word, int pos, pNode *left, pNode *right, char c){
+	*node = (pNode*) malloc(sizeof(pNode));
 
 	if(pos == EXT) initWord(&(*node)->word, word->str);
 	else ((*node)->word) = NULL;
@@ -65,4 +65,23 @@ void patPrint(PAT pat){
     patPrint(pat->left);
     if(isExt(pat)) printf("%s\n", pat->word->str);
     patPrint(pat->right);
+}
+
+bool patFind(PAT pat, Word word){
+	pNode *at;
+	if(pat == NULL) return 0;
+	at = pat;
+	while(at->pos != EXT){
+		if(word.str[at->pos] <= at->c) at = at->left;
+		else at = at->right;
+	}
+	return !strcmp(word.str, at->word->str);
+}
+
+void freePat(PAT *pat){
+	if(*pat == NULL) return;
+	freePat(&(*pat)->left);
+	freePat(&(*pat)->right);
+	free(*pat);
+	*pat = NULL;
 }
