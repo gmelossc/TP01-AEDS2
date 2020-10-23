@@ -22,6 +22,7 @@ void initPat(PAT *pat);
 void addPat(PAT *pat, Word word);
 void patPrint(PAT pat);
 bool patFind(PAT pat, Word word);
+int patCountWord(PAT pat);
 int height(PAT pat);
 void freePat(PAT *pat);
 

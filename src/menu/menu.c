@@ -14,15 +14,14 @@ void menu(){
 	bool flag = 1;
 	char s[200];
 	int op = 0;
-	// system("clear");
+	system("clear");
 	printf("TRABALHO PRÁTICO I: Árvore PATRICIA e trie TST\n\n");
-	printf("GRUPO ^&|:\nÉLIDA EMELLY ANTUNES\n");
+	printf("GRUPO ^&|:\nÉLIDA EMELLY ANTUNES - \n");
 	printf("GUILHERME CORRÊA MELOS - 3882\n");
-	printf("VINICIUS TOMÉ M. G. SILVA - \n");
+	printf("VINICIUS TOMÉ M. G. SILVA - 3874\n");
 	initPat(&pat);
 	initTST(&tst);
 	while(flag){
-		// if(op) system("clear");
 		printf("Operações disponíveis\n\n");
 		printf("1 - Escolher árvore\n");
 		printf("2 - Inserir palavra\n");
@@ -35,7 +34,6 @@ void menu(){
 		if(arvore) printf("\nAVISO: esta operação será realizada na %s\n", (arvore == 1 ? "árvore PATRICIA" : "trie TST"));
 		printf("Digite abaixo o número da operação que deseja executar:\n");
 		scanf("%d", &op);
-		// system("clear");
 
 		switch(op){
 			case 0:
@@ -51,7 +49,7 @@ void menu(){
 				scanf("%d", &arvore);
 
 				if(arvore == 1)
-					if(!pat)initPat(&pat);
+					if(!pat) initPat(&pat);
 				else
 					if(!tst) initTST(&tst);
 				break;
@@ -82,21 +80,27 @@ void menu(){
 				if(arvore == 1){
 					printf("Palavras inseridas na árvore PATRICIA em ordem alfabética:\n");
 					patPrint(pat);
+					printf("\n");
 				}
 				else{
-					char str[200];
 					printf("Palavras inseridas na trie TST em ordem alfabética:\n");
-					printTST(tst, str, 0);
+					tstPrint(tst);
+					printf("\n");
 				}
 				break;
 			case 5:
-				//ainda não implementado
+				system("clear");
+				if(arvore == 1) printf("%d palavras foram inseridas na %s\n", patCountWord(pat), (arvore == 1? "árvore PATRICIA" : "trie TST"));
+				else printf("%d palavras foram inseridas na %s\n", tstCountWord(tst), (arvore == 1? "árvore PATRICIA" : "trie TST"));
 				break;
 			case 6:
 				//ainda não implementado
 				break;
 			case 7:
-				//ainda não implementado
+				system("clear");
+				if(arvore == 1) freePat(&pat);
+				else freeTST(&tst);
+				printf("Todo o conteúdo da %s foi removido! :D\n\n", (arvore == 1? "árvore PATRICIA": "trie TST"));
 				break;
 			default:
 				system("clear");

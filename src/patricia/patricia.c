@@ -56,6 +56,14 @@ void addPat(PAT *pat, Word word){
 	}
 }
 
+int patCountWord(PAT pat){
+	if(!pat) return 0;
+	int ans = isExt(pat);
+	ans += patCountWord(pat->left);
+	ans += patCountWord(pat->right);
+	return ans;
+}
+
 int height(PAT pat){
 	return (pat == NULL ? -1 : 1 + max(height(pat->left), height(pat->right)));
 }
