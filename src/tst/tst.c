@@ -47,6 +47,42 @@ void addTST(TST *tst, char s[], int len){
 	}
 }
 
+void addtxtTST(TST *tst){
+	int i = 0, len;
+    	tNode **at;
+	at = tst;
+    	FILE  *file;
+    	file = fopen("texto.txt", "r");
+    	char s[200];
+
+    	while(fscanf(file, "%s", s) != EOF ){
+        	len = 1;
+        	while(s[len] != '\0') ++len;
+        	i = 0;
+        	at = tst;
+        	while(i < len){
+            		if(!*at){
+                		initNode(at, s[i]);
+                		if(i == len - 1){
+                    			(*at)->end = 1;
+                    		break;
+                		}
+           		}
+            		if((*at)->c == s[i]){ 
+                		if(i == len - 1){
+                    			(*at)->end = 1;
+                    			break;
+                		}
+                		at = &(*at)->mid;
+                		++i;
+            		}
+            		else if((*at)->c > s[i]) at = &(*at)->left;
+            		else at = &(*at)->right;
+        	}
+    	}
+    	fclose(file);
+}
+
 bool tstFind(TST tst, char s[]){
     tNode *at;
 	at = tst;
