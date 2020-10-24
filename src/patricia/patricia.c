@@ -4,7 +4,7 @@ static bool isExt(PAT pat){
 	return pat->pos == EXT ? 1 : 0;
 }
 
-static void initNode(pNode **node, Word *word, int pos, pNode *left, pNode *right, char c, Test *teste){
+static void initpNode(pNode **node, Word *word, int pos, pNode *left, pNode *right, char c, Test *teste){
 	*node = (pNode*) malloc(sizeof(pNode));
 
 	if(pos == EXT) initWord(&(*node)->word, word->str);
@@ -24,7 +24,7 @@ static void addPatUtil(PAT *pat, Word word, Test *teste){
 	int diff = 0;
 
 	computeComparison(teste, 1);
-	if(!*pat) initNode(pat, &word, EXT, NULL, NULL, '\0', teste);
+	if(!*pat) initpNode(pat, &word, EXT, NULL, NULL, '\0', teste);
 	else{
 		at = pat;
 		while(!isExt(*at)){
@@ -41,13 +41,13 @@ static void addPatUtil(PAT *pat, Word word, Test *teste){
 			return;
 		}
 
-		initNode(&external, &word, -1, NULL, NULL, '\0', teste);
+		initpNode(&external, &word, -1, NULL, NULL, '\0', teste);
 
 		computeComparison(teste, 1);
 		if(word.str[diff] <= (*at)->word->str[diff])
-			initNode(&internal, NULL, diff, external, NULL, word.str[diff], teste);
+			initpNode(&internal, NULL, diff, external, NULL, word.str[diff], teste);
 		else
-			initNode(&internal, NULL, diff, NULL, external, (*at)->word->str[diff], teste);
+			initpNode(&internal, NULL, diff, NULL, external, (*at)->word->str[diff], teste);
 
 		at = pat;
 
@@ -120,13 +120,15 @@ void addtxtPat(PAT *pat, Test *teste){
 	char s[200];
 	double ans = 0.0;
 	clock_t t = clock();
-	while(fscanf(file, "%s", s) != EOF ){
+	while(fscanf(file, "%s", s) != EOF){
     	initWord(&word, s);
+
 		t = clock();
 		addPat(pat, *word, teste, 1);
 		t = clock() - t;
+		
 		ans += (double) t/CLOCKS_PER_SEC;
-		free(word);
+		freeWord(&word);
 	}
 	fclose(file);
 	printf("Tempo de execução: %.7lf segundos\n", ans);
@@ -157,6 +159,7 @@ void freePat(PAT *pat){
 	if(*pat == NULL) return;
 	freePat(&(*pat)->left);
 	freePat(&(*pat)->right);
+	if(isExt(*pat)) freeWord(&(*pat)->word);
 	free(*pat);
 	*pat = NULL;
 }

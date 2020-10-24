@@ -16,5 +16,7 @@ void allocWord(Word **word){
 }
 
 void freeWord(Word **word){
+	free((*word)->str);
 	free(*word);
+	*word = NULL;
 }

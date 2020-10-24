@@ -1,11 +1,11 @@
 #include "tst.h"
 
-static void allocNode(tNode **node){
+static void alloctNode(tNode **node){
 	*node = (tNode*) malloc(sizeof(tNode));
 }
 
-static void initNode(tNode **node, char c, Test *teste){ //inicializa um node
-	allocNode(node);
+static void inittNode(tNode **node, char c, Test *teste){ //inicializa um node
+	alloctNode(node);
 	(*node)-> end = false;
 	(*node)->left = NULL;
 	(*node)->mid = NULL;
@@ -14,7 +14,7 @@ static void initNode(tNode **node, char c, Test *teste){ //inicializa um node
 	computeMemory(teste, (long long) sizeof(tNode));
 }
 
-static void freeNode(tNode *node){ //desaloca um tNode
+static void freetNode(tNode *node){ //desaloca um tNode
 	free(node);
 }
 
@@ -42,7 +42,7 @@ static void addTSTUtil(TST *tst, char s[], int len, Test *teste){
 		computeComparison(teste, 2);
 		if(!*at){
 			computeComparison(teste, 1);
-			initNode(at, s[i], teste); // se a raíz é nula, então se inicializa um novo nó com o atributo s[i]
+			inittNode(at, s[i], teste); // se a raíz é nula, então se inicializa um novo nó com o atributo s[i]
 			if(i == len - 1){
 				(*at)->end = 1;
 				computeComparison(teste, 1);

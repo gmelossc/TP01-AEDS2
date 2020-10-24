@@ -15,7 +15,7 @@ void menu(){
 	bool flag = 1;
 	char s[200];
 	int op = 0;
-	system("clear");
+	// system("clear");
 	printf("TRABALHO PRÁTICO I: Árvore PATRICIA e trie TST\n\n");
 	printf("GRUPO ^&|:\nÉLIDA EMELLY ANTUNES - 3012\n");
 	printf("GUILHERME CORRÊA MELOS - 3882\n");
@@ -69,7 +69,7 @@ void menu(){
     					if(arvore == 1){
         					initWord(&word, s);
         					addPat(&pat, *word, &test_pat, 0);
-        					free(word);
+        					freeWord(&word);
     					}
     					else addTST(&tst, s, len(s), &test_tst, 0);
 				}
