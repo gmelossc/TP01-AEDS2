@@ -10,21 +10,24 @@ void menu(){
 	PAT pat;
 	TST tst;
 	Word *word;
+	Test test_pat, test_tst;
 	int arvore = 0, add = 0;
 	bool flag = 1;
 	char s[200];
 	int op = 0;
 	system("clear");
 	printf("TRABALHO PRÁTICO I: Árvore PATRICIA e trie TST\n\n");
-	printf("GRUPO ^&|:\nÉLIDA EMELLY ANTUNES - \n");
+	printf("GRUPO ^&|:\nÉLIDA EMELLY ANTUNES - 3012\n");
 	printf("GUILHERME CORRÊA MELOS - 3882\n");
 	printf("VINICIUS TOMÉ M. G. SILVA - 3874\n");
 	initPat(&pat);
 	initTST(&tst);
+	initTest(&test_tst);
+	initTest(&test_pat);
 	while(flag){
 		printf("Operações disponíveis\n\n");
 		printf("1 - Escolher árvore\n");
-		printf("2 - Inserir palavra\n");
+		printf("2 - Inserir palavra ou texto\n");
 		printf("3 - Pesquisar palavra\n");
 		printf("4 - Exibir todas as palavras em ordem alfabética\n");
 		printf("5 - Contar palavras\n");
@@ -65,19 +68,19 @@ void menu(){
     					scanf("%s", s);
     					if(arvore == 1){
         					initWord(&word, s);
-        					addPat(&pat, *word);
+        					addPat(&pat, *word, &test_pat, 0);
         					free(word);
     					}
-    					else addTST(&tst, s, len(s));
+    					else addTST(&tst, s, len(s), &test_tst, 0);
 				}
 				else{
     					system("clear");
     					if(arvore == 1){
-        					addtxtPat(&pat);
+        					addtxtPat(&pat, &test_pat);
         					printf("As palavras do arquivo texto.txt foram adicionadas na árvore PATRICIA.\n");
     					}
     					else{
-        					addtxtTST(&tst);
+        					addtxtTST(&tst, &test_tst);
         					printf("As palavras do arquivo texto.txt foram adicionadas na trie TST.\n");
     					}
 				}
@@ -112,12 +115,22 @@ void menu(){
 				else printf("%d palavras foram inseridas na %s\n", tstCountWord(tst), (arvore == 1? "árvore PATRICIA" : "trie TST"));
 				break;
 			case 6:
-				//ainda não implementado
+				system("clear");
+				if(arvore == 1){
+					printf("Altura da árvore PATRICIA: %d\n", pHeight(&pat));
+					printf("Contagem de comparações em todas as inserções: %d\n", test_pat.comp);
+					printf("Memória utilizada em todos os nós da árvore: %lld bytes\n\n", test_pat.mem);
+				}
+				else{
+					printf("Altura da trie TST: %d\n", tHeight(&tst));
+					printf("Contagem de comparações em todas as inserções: %d\n", test_tst.comp);
+					printf("Memória utilizada em toda a árvore: %lld bytes\n\n", test_tst.mem);
+				}
 				break;
 			case 7:
 				system("clear");
-				if(arvore == 1) freePat(&pat);
-				else freeTST(&tst);
+				if(arvore == 1) freePat(&pat), initTest(&test_pat);
+				else freeTST(&tst), initTest(&test_tst);
 				printf("Todo o conteúdo da %s foi removido! :D\n\n", (arvore == 1? "árvore PATRICIA": "trie TST"));
 				break;
 			default:
