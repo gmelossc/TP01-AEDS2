@@ -10,7 +10,7 @@ void menu(){
 	PAT pat;
 	TST tst;
 	Word *word;
-	int arvore = 0;
+	int arvore = 0, add = 0;
 	bool flag = 1;
 	char s[200];
 	int op = 0;
@@ -55,14 +55,32 @@ void menu(){
 				break;
 			case 2:
 				system("clear");
-				printf("Digite abaixo palavra que deseja inserir na %s\n", (arvore == 1 ? "árvore PATRICIA" : "trie TST"));
-				scanf("%s", s);
-				if(arvore == 1){
-					initWord(&word, s);
-					addPat(&pat, *word);
-					free(word);
+				printf("1 - Inserir palavra\n");
+				printf("2 - Inserir texto.txt\n");
+				printf("Digite abaixo o número da operação que deseja executar:\n");
+				scanf("%d", &add);
+				if(add == 1){
+    					system("clear");
+    					printf("Digite abaixo palavra que deseja inserir na %s\n", (arvore == 1 ? "árvore PATRICIA" : "trie TST"));
+    					scanf("%s", s);
+    					if(arvore == 1){
+        					initWord(&word, s);
+        					addPat(&pat, *word);
+        					free(word);
+    					}
+    					else addTST(&tst, s, len(s));
 				}
-				else addTST(&tst, s, len(s));
+				else{
+    					system("clear");
+    					if(arvore == 1){
+        					addtxtPat(&pat);
+        					printf("As palavras do arquivo texto.txt foram adicionadas na árvore PATRICIA.\n");
+    					}
+    					else{
+        					addtxtTST(&tst);
+        					printf("As palavras do arquivo texto.txt foram adicionadas na trie TST.\n");
+    					}
+				}
 				break;
 			case 3:
 				system("clear");
