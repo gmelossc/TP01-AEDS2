@@ -20,6 +20,7 @@ typedef pNode * PAT;
 
 void initPat(PAT *pat);
 void addPat(PAT *pat, Word word);
+void addtxtPat(PAT *pat);
 void patPrint(PAT pat);
 bool patFind(PAT pat, Word word);
 int patCountWord(PAT pat);
