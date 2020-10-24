@@ -16,6 +16,7 @@ typedef tNode* TST;
 
 void initTST(TST *tst); //incializa a trie TST
 void addTST(TST *tst, char s[], int len); //adiciona uma nova palavra a TST
+void addtxtTST(TST *tst);
 bool tstFind(TST tst, char s[]); // procura uma palavra na TST
 void tstPrint(TST tst);//printa todo o conteúdo da TST
 int tstCountWord(TST tst); //conta quantas palavras foram inseridas na árvore
