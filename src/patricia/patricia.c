@@ -56,6 +56,20 @@ void addPat(PAT *pat, Word word){
 	}
 }
 
+void addtxtPat(PAT *pat){
+	Word *word;
+    	FILE  *file;
+    	file = fopen("texto.txt", "r");
+    	char s[200];
+
+    	while(fscanf(file, "%s", s) != EOF ){
+        	initWord(&word, s);
+		addPat(pat, *word);
+		free(word);
+    	}
+    	fclose(file);
+}
+
 int patCountWord(PAT pat){
 	if(!pat) return 0;
 	int ans = isExt(pat);
