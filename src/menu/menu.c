@@ -1,3 +1,10 @@
+/* TRABALHO PRÁTICO I:
+*  GRUPO ^&|:
+*             ÉLIDA EMELLY ANTUNES - 3012
+*             GUILHERME CORRÊA MELOS - 3882
+*             VINICIUS TOMÉ M. G. SILVA - 3874
+*/
+
 #include "menu.h"
 
 static int len(char s[]){
@@ -10,20 +17,20 @@ void menu(){
 	PAT pat;
 	TST tst;
 	Word *word;
-	Test test_pat, test_tst;
+	Stats stats_pat, stats_tst;
 	int arvore = 0, add = 0;
 	bool flag = 1;
 	char s[200];
 	int op = 0;
-	// system("clear");
+	system("clear");
 	printf("TRABALHO PRÁTICO I: Árvore PATRICIA e trie TST\n\n");
 	printf("GRUPO ^&|:\nÉLIDA EMELLY ANTUNES - 3012\n");
 	printf("GUILHERME CORRÊA MELOS - 3882\n");
 	printf("VINICIUS TOMÉ M. G. SILVA - 3874\n");
 	initPat(&pat);
 	initTST(&tst);
-	initTest(&test_tst);
-	initTest(&test_pat);
+	initStats(&stats_tst);
+	initStats(&stats_pat);
 	while(flag){
 		printf("Operações disponíveis\n\n");
 		printf("1 - Escolher árvore\n");
@@ -59,30 +66,32 @@ void menu(){
 			case 2:
 				system("clear");
 				printf("1 - Inserir palavra\n");
-				printf("2 - Inserir texto.txt\n");
+				printf("2 - Inserir texto por arquivo (o .txt deve estar inserido na pasta inputs)\n");
 				printf("Digite abaixo o número da operação que deseja executar:\n");
 				scanf("%d", &add);
 				if(add == 1){
-    					system("clear");
-    					printf("Digite abaixo palavra que deseja inserir na %s\n", (arvore == 1 ? "árvore PATRICIA" : "trie TST"));
-    					scanf("%s", s);
-    					if(arvore == 1){
-        					initWord(&word, s);
-        					addPat(&pat, *word, &test_pat, 0);
-        					freeWord(&word);
-    					}
-    					else addTST(&tst, s, len(s), &test_tst, 0);
+					system("clear");
+					printf("Digite abaixo palavra que deseja inserir na %s\n", (arvore == 1 ? "árvore PATRICIA" : "trie TST"));
+					scanf("%s", s);
+					if(arvore == 1){
+    					initWord(&word, s);
+    					addPat(&pat, *word, &stats_pat, 0);
+    					freeWord(&word);
+					}
+					else addTST(&tst, s, len(s), &stats_tst, 0);
 				}
 				else{
-    					system("clear");
-    					if(arvore == 1){
-        					addtxtPat(&pat, &test_pat);
-        					printf("As palavras do arquivo texto.txt foram adicionadas na árvore PATRICIA.\n");
-    					}
-    					else{
-        					addtxtTST(&tst, &test_tst);
-        					printf("As palavras do arquivo texto.txt foram adicionadas na trie TST.\n");
-    					}
+					system("clear");
+					char dest[20], filename[25];
+					filename[0] = '\0';
+
+					strcat(filename, "src/inputs/");
+					printf("Digite o nome do arquivo que deseja abrir no formato nome_do_arquivo.txt\n");
+					scanf("%s", dest);
+					strcat(filename, dest);
+
+					if(arvore == 1) addtxtPat(&pat, &stats_pat, filename);
+					else addtxtTST(&tst, &stats_tst, filename);
 				}
 				break;
 			case 3:
@@ -118,19 +127,22 @@ void menu(){
 				system("clear");
 				if(arvore == 1){
 					printf("Altura da árvore PATRICIA: %d\n", pHeight(&pat));
-					printf("Contagem de comparações em todas as inserções: %d\n", test_pat.comp);
-					printf("Memória utilizada em todos os nós da árvore: %lld bytes\n\n", test_pat.mem);
+					printf("Quantidade de nós internos: %d\n", patCountInternals(pat));
+					printf("Quantidade de nós externos: %d\n", patCountWord(pat));
+					printf("Contagem de comparações em todas as inserções: %d\n", stats_pat.comp);
+					printf("Memória utilizada em todos os nós da árvore: %lld bytes\n\n", stats_pat.mem);
 				}
 				else{
 					printf("Altura da trie TST: %d\n", tHeight(&tst));
-					printf("Contagem de comparações em todas as inserções: %d\n", test_tst.comp);
-					printf("Memória utilizada em toda a árvore: %lld bytes\n\n", test_tst.mem);
+					printf("Quantidade de palavras inseridas\n", tstCountWord(tst));
+					printf("Contagem de comparações em todas as inserções: %d\n", stats_tst.comp);
+					printf("Memória utilizada em toda a árvore: %lld bytes\n\n", stats_tst.mem);
 				}
 				break;
 			case 7:
 				system("clear");
-				if(arvore == 1) freePat(&pat), initTest(&test_pat);
-				else freeTST(&tst), initTest(&test_tst);
+				if(arvore == 1) freePat(&pat), initStats(&stats_pat);
+				else freeTST(&tst), initStats(&stats_tst);
 				printf("Todo o conteúdo da %s foi removido! :D\n\n", (arvore == 1? "árvore PATRICIA": "trie TST"));
 				break;
 			default:

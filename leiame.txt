@@ -1,0 +1,31 @@
+Para compilar e executar o programa, basta executar nesta paste pelo terminal o comando:
+
+make && ./main
+
+Assim que você inicializar o programa, você se deparará com as seguintes opções e deverá digitar pelo terminal apenas uma delas por vez:
+
+1 - Escolher árvore:
+	* Escolha a árvore em que você irá realizar as operações seguintes.
+
+2 - Inserir palavra ou texto:
+	* Se deseja inserir uma única palavra, basta digitá-la pelo terminal.
+	* Se deseja inserir um texto, ele DEVE ser incluido na pasta "src/inputs" e deverá ser digitado pelo terminal no seguinte formato "nome_do_arquivo.txt"
+
+3 - Pesquisar palavra:
+	* Digite pelo terminal a palavra que deseja procurar na estrutura de dados que está operando no momento
+
+4 - Exibir palavras em ordem alfabética:
+	* Sumariza todas as palavras em ordem alfabética/lexicográfica da estrurura em que opera no momento
+
+5 - Contar palavras:
+	* Informa a quantidade de palavras inseridas na dada estrutura em que está operando até o momento
+
+6 - Gerar relatório:
+	* Informa a quantidade total de comparações realizadas, a profundidade e a quantidade total de memória utilizada na estrutura em que está sendo operada
+	* Se a estrutura operada for a árvore PATRICIA, então o relatório também retonará a quantidade de nós internos e externos
+
+7 - Remover todo o conteúdo da árvore:
+	* Remove/desaloca todo o conteúdo da estrutura em que está operando no momento
+
+0 - Sair
+	* Termina a execução do programa
