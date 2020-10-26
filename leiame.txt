@@ -22,7 +22,7 @@ Assim que você inicializar o programa, você se deparará com as seguintes opç
 
 6 - Gerar relatório:
 	* Informa a quantidade total de comparações realizadas, a profundidade e a quantidade total de memória utilizada na estrutura em que está sendo operada
-	* Se a estrutura operada for a árvore PATRICIA, então o relatório também retonará a quantidade de nós internos e externos
+	* Se a estrutura operada for a árvore PATRICIA, então o relatório também retonará a quantidade de nós externos
 
 7 - Remover todo o conteúdo da árvore:
 	* Remove/desaloca todo o conteúdo da estrutura em que está operando no momento

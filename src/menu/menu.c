@@ -127,14 +127,13 @@ void menu(){
 				system("clear");
 				if(arvore == 1){
 					printf("Altura da árvore PATRICIA: %d\n", pHeight(&pat));
-					printf("Quantidade de nós internos: %d\n", patCountInternals(pat));
 					printf("Quantidade de nós externos: %d\n", patCountWord(pat));
 					printf("Contagem de comparações em todas as inserções: %d\n", stats_pat.comp);
 					printf("Memória utilizada em todos os nós da árvore: %lld bytes\n\n", stats_pat.mem);
 				}
 				else{
 					printf("Altura da trie TST: %d\n", tHeight(&tst));
-					printf("Quantidade de palavras inseridas\n", tstCountWord(tst));
+					printf("Quantidade de palavras inseridas: %d\n", tstCountWord(tst));
 					printf("Contagem de comparações em todas as inserções: %d\n", stats_tst.comp);
 					printf("Memória utilizada em toda a árvore: %lld bytes\n\n", stats_tst.mem);
 				}

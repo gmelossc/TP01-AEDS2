@@ -174,15 +174,6 @@ int patCountWord(PAT pat){
 	return ans;
 }
 
-// Conta quantos nós internos existem na árvore PATRICIA
-int patCountInternals(PAT pat){
-	if(!pat) return 0;
-	int ans = !isExt(pat);
-	ans += patCountWord(pat->left);
-	ans += patCountWord(pat->right);
-	return ans;
-}
-
 // Percorre a árvore PATRICIA com uma DFS para encontrar a sua altura
 int pHeight(PAT *pat){
 	return (!*pat ? -1 : 1 + max(pHeight(&(*pat)->left), pHeight(&(*pat)->right)));

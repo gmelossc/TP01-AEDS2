@@ -84,13 +84,6 @@ Retona um inteiro que representa quantas palavras existem na árvore PATRICIA, r
 int patCountWord(PAT pat);
 
 /*
-Retona um inteiro que representa quantos nós internos existem na árvore PATRICIA, recursivamente
-
-@param pat: cópia da árvore PATRICIA
-*/
-int patCountInternals(PAT pat);
-
-/*
 Utiliza de uma dfs para contar a altura da árvore PATRICIA, retornado como inteiro
 
 @param pat: cópia da árvore PATRICIA
