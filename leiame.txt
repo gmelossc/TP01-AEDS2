@@ -12,7 +12,8 @@ Assim que você inicializar o programa, você se deparará com as seguintes opç
 	* Se deseja inserir um texto, ele DEVE ser incluido na pasta "src/inputs" e deverá ser digitado pelo terminal no seguinte formato "nome_do_arquivo.txt"
 
 3 - Pesquisar palavra:
-	* Digite pelo terminal a palavra que deseja procurar na estrutura de dados que está operando no momento
+	* Se deseja pesquisar uma única palavra, basta digitá-la pelo terminal.
+	* Se deseja pesquisar um "texto"/conjunto de palavras, ele DEVE ser incluido na pasta "src/inputs" e deverá ser digitado pelo terminal no seguinte formato "nome_do_arquivo.txt"
 
 4 - Exibir palavras em ordem alfabética:
 	* Sumariza todas as palavras em ordem alfabética/lexicográfica da estrurura em que opera no momento
