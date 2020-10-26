@@ -10,7 +10,8 @@
 // Inicializa um novo stats a ser executado (numa nova árvore)
 void initStats(Stats *stats){
 	stats->mem = 0;
-	stats->comp = 0;
+	stats->compP = 0;
+	stats->compI = 0;
 }
 
 // Incrementa o contador de memória
@@ -19,6 +20,7 @@ void computeMemory(Stats *stats, long long mem){
 }
 
 // Incrementa o contador de comparações
-void computeComparison(Stats *stats, int comp){
-	stats->comp += comp;
+void computeComparison(Stats *stats, int comp, bool type){
+	if(type) stats->compI += comp;
+	else stats->compP += comp;
 }

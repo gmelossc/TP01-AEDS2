@@ -56,22 +56,15 @@ Adiciona de modo iterativo uma nova palavra na trie TST e executa testes de uso 
 void addTST(TST *tst, char s[], int len, Stats *stats, bool text);
 
 /*
-Modulariza a função addTST para inserir um texto por arquivo na trie TST
-
-@param tst: ponteiro para a trie TST
-@param stats: ponteiro para "contador" utilizado nos testes
-@param filename: string que representa o nome do arquivo de texto a ser inserido na trie TST
-*/
-void addtxtTST(TST *tst, Stats *stats, char filename[]);
-
-/*
 Procura de modo iterativo se a palavra está ou não inserida na trie TST, tal resultado é retornado como booleano;
-realiza internamente testes de comparação e de tempo de execução.
+realiza internamente testes de comparação e de tempo de execução quando a palavra não pertence a um texto
 
 @param tst: cópia da trie TST
 @param s: palavra a ser procurada
+@param stats: ponteiro para "contador" utilizado nos testes
+text: booleano que indica se a palavra que está sendo pesquisada pertence a um texto ou não
 */
-bool tstFind(TST tst, char s[]);
+bool tstFind(TST tst, char s[], Stats *stats, bool text);
 
 /*
 Printa, recursivamente, todas as palavras da trie TST

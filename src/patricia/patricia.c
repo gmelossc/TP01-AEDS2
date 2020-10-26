@@ -37,27 +37,27 @@ static void addPatUtil(PAT *pat, Word word, Stats *stats){
 	PAT *at, external, internal;
 	int diff = 0;
 
-	computeComparison(stats, 1);
+	computeComparison(stats, 1, 1);
 	if(!*pat) initpNode(pat, &word, EXT, NULL, NULL, '\0', stats);
 	else{
 		at = pat;
 		while(!isExt(*at)){
-			computeComparison(stats, 2);
+			computeComparison(stats, 2, 1);
 			if(word.str[(*at)->pos] <= (*at)->c) at = &(*at)->left;
 			else at = &(*at)->right;
 		}
 
 		while(diff <= min(word.len, (*at)->word->len) && word.str[diff] == (*at)->word->str[diff]) ++diff;
-		computeComparison(stats, diff);
+		computeComparison(stats, diff, 1);
 
 		if(diff > word.len || diff > (*at)->word->len){
-			computeComparison(stats, 1);
+			computeComparison(stats, 1, 1);
 			return;
 		}
 
 		initpNode(&external, &word, -1, NULL, NULL, '\0', stats);
 
-		computeComparison(stats, 1);
+		computeComparison(stats, 1, 1);
 		if(word.str[diff] <= (*at)->word->str[diff])
 			initpNode(&internal, NULL, diff, external, NULL, word.str[diff], stats);
 		else
@@ -66,11 +66,11 @@ static void addPatUtil(PAT *pat, Word word, Stats *stats){
 		at = pat;
 
 		while((*at)->pos <= diff && !isExt(*at)){
-			computeComparison(stats, 2);
+			computeComparison(stats, 2, 1);
 			if(word.str[(*at)->pos] <= (*at)->c) at = &(*at)->left;
 			else at = &(*at)->right;
 		}
-		computeComparison(stats, 1);
+		computeComparison(stats, 1, 1);
 		if(internal->left) internal->right = *at;
 		else internal->left = *at;
 
@@ -86,12 +86,12 @@ Função baseada no trio que executa este trabalho
 static bool patFindUtil(PAT pat, Word word, Stats *stats){
 	pNode *at;
 	if(pat == NULL){
-		computeComparison(stats, 1);
+		computeComparison(stats, 1, 0);
 		return 0;
 	}
 	at = pat;
 	while(at->pos != EXT){
-		computeComparison(stats, 2);
+		computeComparison(stats, 2, 0);
 		if(word.str[at->pos] <= at->c) at = at->left;
 		else at = at->right;
 	}
@@ -106,7 +106,7 @@ void initPat(PAT *pat){
 // Modulariza a adicão de uma palavra na árvore PATRICIA, executa testes de comparação, tempo de execução e de uso de memória
 void addPat(PAT *pat, Word word, Stats *stats, bool text){
 	clock_t t;
-	int cur_comp = stats->comp;
+	int cur_comp = stats->compI;
 	long long cur_mem = stats->mem;
 
 	if(text) addPatUtil(pat, word, stats);
@@ -115,54 +115,26 @@ void addPat(PAT *pat, Word word, Stats *stats, bool text){
 		addPatUtil(pat, word, stats);
 		t = clock() - t;
 		printf("Tempo de exercução: %.7lf segundos\n", (double) t/CLOCKS_PER_SEC);
-		printf("Contagem de comparações: %d\n", stats->comp - cur_comp);
+		printf("Contagem de comparações: %d\n", stats->compI - cur_comp);
 		printf("Memória utilizada: %lld bytes\n\n", stats->mem - cur_mem);
 	}
 }
 
 // Modulariza a procura de uma palavra na árvore PATRICIA, executa testes de comparação e de tempo de execução
-bool patFind(PAT pat, Word word){
-	Stats stats;
-	bool found;
-	initStats(&stats);
+bool patFind(PAT pat, Word word, Stats *stats, bool text){
+	bool found = 0;
+	clock_t t;
+	int cur_comp = stats->compP;
 
-	clock_t t = clock();
-	found = patFindUtil(pat, word, &stats);
+	if(text) found = patFindUtil(pat, word, stats);
+	else{
+	t = clock();
+	found = patFindUtil(pat, word, stats);
 	t = clock() - t;
 	printf("Tempo de execução: %.7lf segundos\n", (double) t/CLOCKS_PER_SEC);
-	printf("Contagem de comparações: %d\n", stats.comp);
-
+	printf("Contagem de comparações: %d\n", stats->compP - cur_comp);
+	}
 	return found;
-}
-
-// Modulariza a adição de um texto por arquivo na árvore PATRICIA, executa testes globais de tempo de execução, de uso de memória e de comparação
-void addtxtPat(PAT *pat, Stats *stats, char filename[]){
-	Word *word;
-	FILE  *file;
-
-	file = fopen(filename, "r");
-	if(file == NULL){
-		printf("\nArquivo não encontrado\n\n");
-		return;
-	}
-	char s[200];
-	double ans = 0.0;
-	clock_t t = clock();
-	while(fscanf(file, "%s", s) != EOF){
-    	initWord(&word, s);
-
-		t = clock();
-		addPat(pat, *word, stats, 1);
-		t = clock() - t;
-
-		ans += (double) t/CLOCKS_PER_SEC;
-		freeWord(&word);
-	}
-	fclose(file);
-	printf("\nAs palavras do arquivo \"%s\" foram adicionadas na árvore PATRICIA.\n", filename);
-	printf("Tempo de execução: %.7lf segundos\n", ans);
-	printf("Contagem de comparações total do texto: %d\n", stats->comp);
-	printf("Memória utilizada: %lld bytes\n\n", stats->mem);
 }
 
 // Conta quantas palavras existem na árvore PATRICIA (também serve para contar quantos nós externos existem)

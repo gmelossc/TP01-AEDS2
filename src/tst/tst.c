@@ -55,13 +55,13 @@ static void addTSTUtil(TST *tst, char s[], int len, Stats *stats){
 	at = tst;
 
 	while(i < len){
-		computeComparison(stats, 2);
+		computeComparison(stats, 2, 1);
 		if(!*at){
-			computeComparison(stats, 1);
+			computeComparison(stats, 1, 1);
 			inittNode(at, s[i], stats);
 			if(i == len - 1){
 				(*at)->end = 1;
-				computeComparison(stats, 1);
+				computeComparison(stats, 1, 1);
 				break;
 			}
 		}
@@ -90,9 +90,9 @@ static bool tstFindUtil(TST tst, char s[], Stats *stats){
 	int i = 0;
 
     while(i < len - 1){
-		computeComparison(stats, 2);
+		computeComparison(stats, 2, 0);
 		if(!at){
-			computeComparison(stats, 1);
+			computeComparison(stats, 1, 0);
 			return 0;
 		}
 		if(s[i] < at->c) at = at->left;
@@ -113,7 +113,7 @@ void initTST(TST *tst){
 // Adiciona uma palavra à árvore (modularizado) e executa testes de tempo de execução, de comparação e de uso de memória
 void addTST(TST *tst, char s[], int len, Stats *stats, bool text){
 	clock_t t;
-	int cur_comp = stats->comp;
+	int cur_comp = stats->compI;
 	int cur_mem = stats->mem;
 
 	if(text) addTSTUtil(tst, s, len, stats);
@@ -123,52 +123,25 @@ void addTST(TST *tst, char s[], int len, Stats *stats, bool text){
 		t = clock() - t;
 
 		printf("Tempo de execução: %.7lf segundos\n", (double) t/CLOCKS_PER_SEC);
-		printf("Contagem de comparações: %d\n", stats->comp - cur_comp);
+		printf("Contagem de comparações: %d\n", stats->compI - cur_comp);
 		printf("Memória utilizada: %lld bytes\n\n", stats->mem - cur_mem);
 	}
 }
 
-// Modulariza a função addTST com fim de adicionar textos por arquivo e executa testes globais de tempo de execução, de comparação e de uso de memória
-void addtxtTST(TST *tst, Stats *stats, char filename[]){
-	int len;
-	FILE  *file;
-	double ans = 0.0;
-	clock_t t;
-
-	file = fopen(filename, "r");
-	if(file == NULL){
-		printf("Arquivo não encontrado\n\n");
-		return;
-	}
-	char s[200];
-
-	while(fscanf(file, "%s", s) != EOF){
-    	len = 1;
-    	while(s[len] != '\0') ++len;
-		t = clock();
-		addTST(tst, s, len, stats, 1);
-		t = clock() - t;
-		ans += (double) t/CLOCKS_PER_SEC;
-	}
-	fclose(file);
-	printf("\nAs palavras do arquivo \"%s\" foram adicionadas na trie TST.\n", filename);
-	printf("Tempo de execução: %.7lf segundos\n", ans);
-	printf("Contagem de comparações: %d\n", stats->comp);
-	printf("Memória utilizada: %lld\n", stats->mem);
-}
-
 // Procura se uma palavra está inserida ou não na trie TST (de modo modularizado) e executa testes de comaparação e de tempo de execução
-bool tstFind(TST tst, char s[]){
+bool tstFind(TST tst, char s[], Stats *stats, bool text){
 	clock_t t;
 	bool found;
-	Stats stats;
-	initStats(&stats);
+	int cur_comp = stats->compP;
 
-	t = clock();
-	found = tstFindUtil(tst, s, &stats);
-	t = clock() - t;
-	printf("Tempo de execução: %.7lf segundos\n", (double) t/CLOCKS_PER_SEC);
-	printf("Contagem de comparações: %d\n", stats.comp);
+	if(text) found = tstFindUtil(tst, s, stats);
+	else{
+		t = clock();
+		found = tstFindUtil(tst, s, stats);
+		t = clock() - t;
+		printf("Tempo de execução: %.7lf segundos\n", (double) t/CLOCKS_PER_SEC);
+		printf("Contagem de comparações: %d\n", stats->compP - cur_comp);
+	}
 	return found;
 }
 

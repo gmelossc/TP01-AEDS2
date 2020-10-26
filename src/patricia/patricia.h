@@ -52,15 +52,6 @@ Adiciona de modo iterativo uma palavra à árvore PATRICIA e executa os testes d
 void addPat(PAT *pat, Word word, Stats *stats, bool text);
 
 /*
-Adiciona um texto por arquivo à árvore PATRICIA, modulariza a função addPat e executa testes de comparação, memória e tempo de execução
-
-@param pat: Ponteiro para a árvore PATRICIA
-@param stats: ponteiro para o "contador" do número de comparações e memória em bytes
-@param filename: string que representa o nome do arquivo de texto a ser inserido na árvore PATRICIA
-*/
-void addtxtPat(PAT *pat, Stats *stats, char filename[]);
-
-/*
 Printa, recursivamente, todas as palavras da árvore PATRICIA
 
 @param pat: cópia da árvore PATRICIA
@@ -69,12 +60,14 @@ void patPrint(PAT pat);
 
 /*
 Procura de maneira iterativa se a palavra está ou não inserida na árvore PATRICIA, tal resultado é retornado como booleano;
-realiza internamente testes de comparação e de tempo de execução.
+realiza internamente testes de comparação e de tempo de execução quando a palavra buscada não pertence a um texto
 
 @param pat: cópia da árvore PATRICIA
 @param word: cópia da palavra a ser procurada
+@param stats: ponteiro para o "contador" do número de comparações e memória em bytes
+@param text: boolean se a palavra que está sendo pesquisada faz parte de um texto ou não
 */
-bool patFind(PAT pat, Word word);
+bool patFind(PAT pat, Word word, Stats *stats, bool text);
 
 /*
 Retona um inteiro que representa quantas palavras existem na árvore PATRICIA, recursivamente (também serve para contar quantos nós são externos)

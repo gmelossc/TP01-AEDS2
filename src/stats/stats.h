@@ -9,15 +9,18 @@
 #define __STATS_H__
 
 #include <time.h>
+#include <stdbool.h>
 
 /*
 Os testes de comparação e de uso de memória foram feitos com base no tipo abstrato de dados Stats
 
-@param comp: número de comparações
+@param compI: número de comparações na inserção
+@param compP: número de comparações na pesquisa
 @param mem: memória em bytes
 */
 typedef struct stats{
-	int comp;
+	int compI;
+	int compP;
 	long long mem;
 } Stats;
 
@@ -41,7 +44,8 @@ Incrementa número de comparações no teste
 
 @param stats: Ponteiro para um teste
 @param comp: Quantidade de memória em bytes a ser incrementado
+@param type: Informa o tipo se o tipo de comparação é de inserção ou de pesquisa
 */
-void computeComparison(Stats *stats, int comp);
+void computeComparison(Stats *stats, int comp, bool type);
 
 #endif
