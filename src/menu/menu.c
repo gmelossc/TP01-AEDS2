@@ -75,7 +75,7 @@ static void inputFromFile(PAT *pat, TST *tst, Stats *stats, int op, int arvore){
 	printf("Tempo médio de execução por palavra: %.7lf segundos\n", (double) ans/palavras);
 	printf("Contagem de comparações global das palavras: %d\n", (op == 2 ? stats->compI - cur_stats.compI : stats->compP - cur_stats.compP));
 	printf("Número médio de comparações por palavra: %d\n", (op == 2 ? stats->compI - cur_stats.compI : stats->compP - cur_stats.compP)/palavras);
-	printf("Quantidade de palavras %s: %d\n", (op == 2 ? "inseridas" : "pesquisadas"), palavras);
+	printf("Quantidade de palavras %s no texto (contagem com repetição): %d\n", (op == 2 ? "inseridas" : "pesquisadas"), palavras);
 	if(op == 2) printf("Memória utilizada para armazenar o texto: %lld bytes\n", stats->mem - cur_stats.mem);
 	if(op == 3){
 		printf("Total de palavras encontradas: %d\n", found);
