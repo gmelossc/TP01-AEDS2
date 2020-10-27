@@ -7,12 +7,6 @@
 
 #include "menu.h"
 
-static int len(char s[]){
-	int i = 0;
-	while(s[i] != '\0') ++i;
-	return i;
-}
-
 // Recebe um arquivo de texto, realiza testes globais de execução, uso de memória e contagem de comparaçoes com base na modularização da pesquisa e inserção no texto
 static void inputFromFile(PAT *pat, TST *tst, Stats *stats, int op, int arvore){
 	Word *word;
@@ -57,7 +51,7 @@ static void inputFromFile(PAT *pat, TST *tst, Stats *stats, int op, int arvore){
 		else{
 			if(op == 2){
 				t = clock();
-				addTST(tst, s, len(s), stats, 1);
+				addTST(tst, s, strlen(s), stats, 1);
 				t = clock() - t;
 			}
 			else{
@@ -150,7 +144,7 @@ void menu(){
     					addPat(&pat, *word, &stats_pat, 0);
     					freeWord(&word);
 					}
-					else addTST(&tst, s, len(s), &stats_tst, 0);
+					else addTST(&tst, s, strlen(s), &stats_tst, 0);
 				}
 				else{
 					system("clear");

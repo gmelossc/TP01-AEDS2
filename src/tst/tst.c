@@ -89,7 +89,7 @@ static bool tstFindUtil(TST tst, char s[], Stats *stats){
 	int len = strlen(s);
 	int i = 0;
 
-    while(i < len - 1){
+    while(i < len){
 		computeComparison(stats, 2, 0);
 		if(!at){
 			computeComparison(stats, 1, 0);
@@ -97,6 +97,7 @@ static bool tstFindUtil(TST tst, char s[], Stats *stats){
 		}
 		if(s[i] < at->c) at = at->left;
 		else if(s[i] == at->c){
+			if(i == len - 1) return at->end;
 			at = at->mid;
 			++i;
 		}
